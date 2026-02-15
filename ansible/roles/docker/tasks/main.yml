@@ -1,0 +1,70 @@
+---
+- name: Install required packages
+  dnf:
+    name:
+      - dnf-plugins-core
+      - device-mapper-persistent-data
+      - lvm2
+    state: present
+
+- name: Add Docker repository
+  yum_repository:
+    name: docker-ce
+    description: "Docker CE Repository"
+    baseurl: "https://download.docker.com/linux/rhel/9/$basearch/stable"
+    gpgkey: "https://download.docker.com/linux/rhel/gpg"
+    gpgcheck: yes
+
+- name: Install Docker CE
+  dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: yes
+
+- name: Ensure Docker service is running
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add ec2-user to docker group
+  user:
+    name: ec2-user
+    groups: docker
+    append: yes
+
+- name: Create app directory
+  file:
+    path: "/opt/docker-app"
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: "0755"
+
+- name: Copy docker-compose.yml
+  copy:
+    src: docker-compose.yml
+    dest: "/opt/docker-app/docker-compose.yml"
+    owner: ec2-user
+    group: ec2-user
+    mode: "0644"
+
+- name: Copy html directory
+  copy:
+    src: html/
+    dest: "/opt/docker-app/html/"
+    owner: ec2-user
+    group: ec2-user
+    mode: "0755"
+
+- name: Deploy containers
+  command: docker compose up -d
+  args:
+    chdir: "/opt/docker-app"
+  register: deploy_result
+  changed_when: "'Starting' in deploy_result.stdout or 'Recreating' in deploy_result.stdout"

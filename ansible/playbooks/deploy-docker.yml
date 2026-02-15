@@ -1,0 +1,8 @@
+---
+- name: Deploy Docker application to EC2
+  hosts: webserver
+  become: true
+  gather_facts: true
+
+  roles:
+    - docker

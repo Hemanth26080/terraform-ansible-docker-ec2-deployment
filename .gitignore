@@ -1,0 +1,25 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# AWS/Secrets
+*.pem
+.aws/
+credentials
+
+# Ansible
+*.retry
+inventory/ec2_inventory.yaml
+
+# OS
+.DS_Store
+Thumbs.db
