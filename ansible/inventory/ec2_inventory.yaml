@@ -3,4 +3,6 @@ all:
     webserver:
       ansible_host: "{{ lookup('env', 'SERVER_IP') }}"
       ansible_user: ec2-user
-      ansible_ssh_private_key_file: "~/.ssh/project2-key.pem"
+      ansible_ssh_private_key_file: "~/.ssh/terraform-ansible-key.pem"
+      ansible_password: "{{ lookup('env', 'SERVER_PASS') }}"
+      ansible_become_password: "{{ lookup('env', 'SERVER_PASS') }}"

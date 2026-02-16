@@ -14,11 +14,11 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "SSH key pair name"
+  description = "terraform-ansible-key"
   type        = string
 }
 
 variable "your_ip" {
-  description = "Your public IP for SSH access"
+  description = "81.220.54.97"
   type        = string
 }
