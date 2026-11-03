@@ -43,6 +43,8 @@ _Zero manual setup • Secure-by-default • Docker Compose Multi-Stack_
 
 ## 🎯 Architecture
 
+![Terraform + Ansible AWS EC2 Architecture](docs/architecture-diagram.png)
+
 | Component | Responsibility | Technical Details |
 |-----------|----------------|-------------------|
 | **Terraform** | Cloud Infrastructure | VPC, IGW, Security Groups, EC2 (RHEL 9) |
